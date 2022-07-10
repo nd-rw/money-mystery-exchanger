@@ -9,6 +9,13 @@ function copyScene(scene) {
     return scene.map(row=>row.slice());
 }
 
+function smartLog(message, logObject) {
+    const logging = true;
+    if (logging) {
+        console.log(message, logObject);
+    }
+}
+
 function mergeIntoStage(stage, shape, position) {
     let res = stage;
 
@@ -54,7 +61,10 @@ export function useBoard() {
     }
 
     function tick() {
-        if (!movePosition(0, 1)) {
+        smartLog('pos', position)
+        smartLog('valid pos: ', validPosition(position, shape))
+        if (!checkMovePosition(0, -1)) {
+            smartLog('spawn new shape')
             placeShape();
         }
     }
@@ -62,7 +72,7 @@ export function useBoard() {
     function placeShape() {
         setScene(mergeIntoStage(scene, shape, position));
         setShape(randomShape());
-        setPosition({x: 0, y: 0});
+        setPosition({x: 4, y: 18});
     }
 
     function rotateShape() {
@@ -151,7 +161,7 @@ export function useBoard() {
                 event.preventDefault();
                 break;
             case 'ArrowUp':
-                rotateShape();
+                movePosition(0,-1);
                 event.preventDefault();
                 break;
             default:
@@ -165,6 +175,14 @@ export function useBoard() {
         if (!validPosition(res, shape)) { return false;}
 
         setPosition(res);
+
+        return true;
+    }
+
+    function checkMovePosition(x, y) {
+        const res = {x: x + position.x, y: y + position.y};
+
+        if (!validPosition(res, shape)) { return false;}
 
         return true;
     }
