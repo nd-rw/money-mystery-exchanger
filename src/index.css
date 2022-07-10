@@ -27,7 +27,7 @@ body {
 }
 
 .t-cell-1 {
-    background-color: #00d;
+    background-color: yellow;
     border-bottom: 1px solid #00f;
     border-right: 1px solid #00f;
     border-top: 1px solid #00b;
@@ -52,6 +52,7 @@ body {
 
 .t-parent {
     display: flex;
+    justify-content: center;
 }
 
 element.style {
